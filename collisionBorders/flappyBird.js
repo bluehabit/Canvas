@@ -58,7 +58,6 @@ function draw(){
 function border(image){
 	ctx.strokeStyle = "red";
 	ctx.lineWidth = 2;
-	ctx.globalAlpha = .5;
 	ctx.strokeRect(image.dx, image.dy, image.width, image.height);
 }
 
