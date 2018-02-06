@@ -1,0 +1,140 @@
+
+<canvas></canvas>
+
+<style>
+canvas {
+	border: 2px solid grey;
+}
+
+body {
+	margin: 0;
+}
+
+</style>
+
+<script>
+
+//old method
+/*
+var rectA = {
+	left: 255,
+	top: 55, 
+	right: 15,
+	bottom: 15
+};
+*/
+
+//new method
+/*could rename this
+rectA = {
+	x: 255,
+	y: 55,
+	width: 15,
+	bottom: 15
+}
+
+remember in canvas the first pair are just x,y coordinates
+the second pair is length/width 
+*/
+
+var rectA = {
+	x: 255,
+	y: 55, 
+	width: 15,
+	height: 15
+};
+
+var rectB = {
+	x: 20,
+	y: 20,
+	width: 50,
+	height: 50
+}
+
+var rectC = {
+	x: 70,
+	y: 70,
+	width: 90,
+	height: 90
+}
+
+var rectD = {
+	x: 85,
+	y: 85,
+	width: 82,
+	height: 82
+}
+
+var total;
+var dx = 3;
+
+var cvs = document.querySelector('canvas');
+var ctx = cvs.getContext('2d');
+//change 355 value
+cvs.width = window.innerWidth - 355;
+cvs.height = window.innerHeight;
+
+var cWidth = window.innerWidth;
+
+function intersection(a,b){
+   //a.x<= b.width becuase as you pull x your value decreases
+   //a.y<= b.height because as you pull DOWN your value increases
+   return (a.x <= b.width &&
+          b.x <= a.width &&
+          a.y <= b.height &&
+          b.y <= a.height);
+}
+
+function draw(){
+	total = rectA.x + rectA.width;
+	requestAnimationFrame(draw);
+	ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+
+	ctx.fillStyle = 'black';
+	ctx.fillRect(rectA.x,rectA.y,rectA.width,rectA.height);
+	ctx.fillStyle = 'blue';
+	ctx.fillRect(rectB.x,rectB.y,rectB.width,rectB.height);
+
+	// //move left
+	// if(rectA.x + rectA.width > cvs.width || rectA.x < 0){
+	// 	dx = -dx
+	// }
+
+	// //move right
+	// rectA.x += dx;
+
+	// console.log(rectA.x)
+
+	if(rectA.x + rectA.width >= cvs.width || rectA.x <= 0){
+		dx = -dx
+	}
+	//examine why putting this in an else clause does
+	//not work
+	//move right
+	rectA.x += dx;
+
+
+
+	// if((rectA.x + rectA.width) < cvs.width){
+	// 	rectA.x+=3;
+	// } 
+
+	// if((rectA.x + rectA.width) >= cvs.width){
+	// 	rectA.x-=3;
+	// }
+
+
+}
+
+draw();
+
+
+// console.log(intersection(rectA, rectB));
+// //->true
+// console.log(intersection(rectA, rectC));
+// //->false
+
+//check video on how to remove padding from body
+//for canvas element
+
+</script>
