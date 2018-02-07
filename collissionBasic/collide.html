@@ -1,47 +1,24 @@
+<h3>Collision Detection</h3>
+<h4>Open Console</h4>
 
 <canvas></canvas>
 
 <style>
-canvas {
-	border: 2px solid grey;
-}
-
-body {
-	margin: 0;
-}
-
+	canvas {
+		border: 2px solid black;
+	}
 </style>
 
 <script>
 
-//old method
-/*
-var rectA = {
-	left: 255,
-	top: 55, 
-	right: 15,
-	bottom: 15
-};
-*/
-
-//new method
-/*could rename this
-rectA = {
-	x: 255,
-	y: 55,
-	width: 15,
-	bottom: 15
-}
-
-remember in canvas the first pair are just x,y coordinates
-the second pair is length/width 
-*/
+var total;
+var dx = 3;
 
 var rectA = {
-	x: 255,
-	y: 55, 
-	width: 15,
-	height: 15
+	x: 10,
+	y: 10, 
+	width: 30,
+	height: 30
 };
 
 var rectB = {
@@ -65,20 +42,13 @@ var rectD = {
 	height: 82
 }
 
-var total;
-var dx = 3;
-
 var cvs = document.querySelector('canvas');
 var ctx = cvs.getContext('2d');
-//change 355 value
-cvs.width = window.innerWidth - 355;
-cvs.height = window.innerHeight;
-
-var cWidth = window.innerWidth;
+ctx.fillRect(rectA.x,rectA.y,rectA.width,rectA.height);
+ctx.fillStyle = 'blue';
+ctx.fillRect(rectB.x,rectB.y,rectB.width,rectB.height);
 
 function intersection(a,b){
-   //a.x<= b.width becuase as you pull x your value decreases
-   //a.y<= b.height because as you pull DOWN your value increases
    return (a.x <= b.width &&
           b.x <= a.width &&
           a.y <= b.height &&
@@ -95,46 +65,25 @@ function draw(){
 	ctx.fillStyle = 'blue';
 	ctx.fillRect(rectB.x,rectB.y,rectB.width,rectB.height);
 
-	// //move left
-	// if(rectA.x + rectA.width > cvs.width || rectA.x < 0){
-	// 	dx = -dx
-	// }
+	if(intersection(rectA,rectB)){
+		ctx.fillStyle = 'red';
+		ctx.fillRect(rectA.x,rectA.y,rectA.width,rectA.height);
+		console.log('hit')
+	}
 
-	// //move right
-	// rectA.x += dx;
-
-	// console.log(rectA.x)
-
-	if(rectA.x + rectA.width >= cvs.width || rectA.x <= 0){
+	//move left
+	if(rectA.x + rectA.width > cvs.width || rectA.x < 0){
 		dx = -dx
 	}
-	//examine why putting this in an else clause does
-	//not work
+
 	//move right
 	rectA.x += dx;
-
-
-
-	// if((rectA.x + rectA.width) < cvs.width){
-	// 	rectA.x+=3;
-	// } 
-
-	// if((rectA.x + rectA.width) >= cvs.width){
-	// 	rectA.x-=3;
-	// }
-
-
 }
 
 draw();
 
+console.log(intersection(rectA, rectB));
 
-// console.log(intersection(rectA, rectB));
-// //->true
-// console.log(intersection(rectA, rectC));
-// //->false
 
-//check video on how to remove padding from body
-//for canvas element
 
 </script>
