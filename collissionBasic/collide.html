@@ -18,14 +18,16 @@ var rectA = {
 	x: 10,
 	y: 10, 
 	width: 30,
-	height: 30
+	height: 30,
+	speed: 3
 };
 
 var rectB = {
 	x: 20,
 	y: 20,
 	width: 50,
-	height: 50
+	height: 50,
+	speed: 1
 }
 
 var rectC = {
@@ -49,10 +51,10 @@ ctx.fillStyle = 'blue';
 ctx.fillRect(rectB.x,rectB.y,rectB.width,rectB.height);
 
 function intersection(a,b){
-   return (a.x <= b.width &&
-          b.x <= a.width &&
-          a.y <= b.height &&
-          b.y <= a.height);
+   return (a.x <= b.x + b.width &&
+          b.x <= a.x + a.width &&
+          a.y <= b.height + b.y &&
+          b.y <= a.height + a.y);
 }
 
 function draw(){
@@ -71,18 +73,30 @@ function draw(){
 		console.log('hit')
 	}
 
+	//RectA
 	//move left
 	if(rectA.x + rectA.width > cvs.width || rectA.x < 0){
-		dx = -dx
+		rectA.speed = -rectA.speed
 	}
 
 	//move right
-	rectA.x += dx;
+	rectA.x += rectA.speed;
+
+	//RectB
+	//move left
+	if(rectB.x + rectB.width > cvs.width || rectB.x < 0){
+		rectB.speed = -rectB.speed
+	}
+
+	//move right
+	rectB.x += rectB.speed;
 }
 
 draw();
 
 console.log(intersection(rectA, rectB));
+
+
 
 
 
